@@ -1,0 +1,22 @@
+package com.softuni.mobilele.services.model;
+
+import org.springframework.stereotype.Service;
+
+import com.softuni.mobilele.services.init.DataBaseInitService;
+
+@Service
+public class ModelServiceImpl implements ModelService, DataBaseInitService {
+
+	@Override
+	public void dbInit() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isDbInit() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}
