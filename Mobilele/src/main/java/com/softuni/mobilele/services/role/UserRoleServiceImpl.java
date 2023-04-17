@@ -2,10 +2,12 @@ package com.softuni.mobilele.services.role;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import com.softuni.mobilele.domain.dtos.model.UserRoleModel;
 import com.softuni.mobilele.domain.dtos.view.UserRoleViewDto;
 import com.softuni.mobilele.domain.entities.UserRole;
 import com.softuni.mobilele.domain.enums.Role;
@@ -42,5 +44,17 @@ public class UserRoleServiceImpl implements UserRoleService {
 	public List<UserRoleViewDto> getAll() {
 		return this.userRoleRepository.findAll().stream().map(role -> modelMapper.map(role, UserRoleViewDto.class))
 				.toList();
+	}
+
+	@Override
+	public List<UserRoleModel> findAllRoles() {
+		return this.userRoleRepository.findAll().stream().map(role -> modelMapper.map(role, UserRoleModel.class))
+				.toList();
+	}
+
+	@Override
+	public UserRoleModel findRoleByName(String role) {
+		return this.modelMapper.map(this.userRoleRepository.findByRole(role).orElseThrow(NoSuchElementException::new),
+				UserRoleModel.class);
 	}
 }
