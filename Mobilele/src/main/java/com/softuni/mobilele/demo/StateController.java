@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.softuni.mobilele.domain.dtos.banding.UserRegisterFormDto;
+import com.softuni.mobilele.domain.dtos.binding.UserRegisterFormDto;
 import com.softuni.mobilele.web.BaseController;
 
 import jakarta.servlet.http.Cookie;

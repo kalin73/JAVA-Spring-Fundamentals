@@ -1,15 +1,38 @@
-package com.softuni.mobilele.domain.dtos.banding;
+package com.softuni.mobilele.domain.dtos.binding;
 
+import com.softuni.mobilele.validations.matchingPasswords.PasswordMatch;
+
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
+
+@PasswordMatch(password = "password", confirmPassword = "confirmPassword")
 public class UserRegisterFormDto {
+	@NotNull
+	@Size(min = 5, max = 20)
 	private String username;
 
+	@NotNull
+	@Size(min = 5, max = 20)
 	private String password;
 
+	@NotNull
+	@Size(min = 5, max = 20)
+	private String confirmPassword;
+
+	@NotNull
+	@Size(min = 5, max = 20)
 	private String firstName;
 
+	@NotNull
+	@Size(min = 5, max = 20)
 	private String lastName;
 
 	private String role;
+
+	public UserRegisterFormDto() {
+
+	}
 
 	public String getUsername() {
 		return username;
@@ -25,6 +48,14 @@ public class UserRegisterFormDto {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
 	}
 
 	public String getFirstName() {
@@ -50,4 +81,5 @@ public class UserRegisterFormDto {
 	public void setRole(String role) {
 		this.role = role;
 	}
+
 }

@@ -1,11 +1,11 @@
-package com.softuni.pathfinder.web;
+package com.softuni.pathfinder.web.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.softuni.pathfinder.domain.dtos.view.MostCommentedRouteViewDTO;
+import com.softuni.pathfinder.domain.dtos.view.RoutePartialViewModel;
 import com.softuni.pathfinder.services.RouteService;
 
 import jakarta.servlet.http.HttpSession;
@@ -26,11 +26,16 @@ public class HomeController extends BaseController {
 				? httpSession.getAttribute(USERNAME_SESSION_KEY).toString()
 				: "";
 
-		final MostCommentedRouteViewDTO mostCommented = routeService.getMostCommented();
+		final RoutePartialViewModel mostCommented = routeService.getMostCommented();
 
 		modelAndView.addObject("mostCommented", mostCommented);
 		modelAndView.addObject(USERNAME_SESSION_KEY, username);
 
 		return super.view("index", modelAndView);
+	}
+
+	@GetMapping("/about")
+	public ModelAndView getAbout() {
+		return super.view("about");
 	}
 }

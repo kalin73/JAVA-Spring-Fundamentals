@@ -1,5 +1,5 @@
 package com.softuni.pathfinder.domain.enums;
 
 public enum CategoryName {
-	PADESTRIAN, BICYCLE, MOTORCYCLE, CAR
+	PEDESTRIAN, BICYCLE, MOTORCYCLE, CAR
 }

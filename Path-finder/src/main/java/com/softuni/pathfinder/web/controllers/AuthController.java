@@ -1,19 +1,17 @@
-package com.softuni.pathfinder.web;
+package com.softuni.pathfinder.web.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.softuni.pathfinder.domain.dtos.binding.UserLoginForm;
 import com.softuni.pathfinder.domain.dtos.binding.UserRegisterForm;
 import com.softuni.pathfinder.services.UserService;
-
-import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/auth")
@@ -25,26 +23,19 @@ public class AuthController extends BaseController {
 	}
 
 	@GetMapping("/register")
-	public ModelAndView getRegister(ModelAndView modelAndView, @ModelAttribute UserRegisterForm userRegisterInfo) {
-
-		modelAndView.addObject("userRegisterInfo", userRegisterInfo);
-
-		return super.view("register", modelAndView);
+	public ModelAndView getRegister() {
+		return super.view("register");
 	}
 
 	@PostMapping("/register")
-	public ModelAndView postRegister(ModelAndView modelAndView, @Valid UserRegisterForm userRegisterInfo,
-			BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+	public ModelAndView postRegister(ModelAndView modelAndView, @Validated UserRegisterForm userRegisterForm,
+			BindingResult bindingResult) {
 
 		if (bindingResult.hasErrors()) {
-			redirectAttributes
-					.addAttribute("org.springframework.validation.BindingResult.userRegisterInfo", bindingResult)
-					.addFlashAttribute("userRegisterBindingModel", userRegisterInfo);
-
-			return super.redirect("register");
+			return super.view("register", modelAndView.addObject(userRegisterForm));
 		}
 
-		this.userService.registerUser(userRegisterInfo);
+		this.userService.registerUser(userRegisterForm);
 
 		return super.redirect("login");
 	}
@@ -55,8 +46,13 @@ public class AuthController extends BaseController {
 	}
 
 	@PostMapping("/login")
-	public ModelAndView postLogin(UserLoginForm userLoginInfo) {
-		return this.userService.loginUser(userLoginInfo).isValid() ? super.redirect("/") : super.redirect("login");
+	public ModelAndView postLogin(@Validated UserLoginForm userLoginForm, BindingResult bindingResult,
+			ModelAndView modelAndView) {
+		if (bindingResult.hasErrors()) {
+			return super.view("login", modelAndView.addObject(userLoginForm));
+		}
+
+		return this.userService.loginUser(userLoginForm).isValid() ? super.redirect("/") : super.redirect("login");
 	}
 
 	@GetMapping("/logout")
@@ -66,4 +62,13 @@ public class AuthController extends BaseController {
 		return super.redirect("/");
 	}
 
+	@ModelAttribute("userRegisterForm")
+	public UserRegisterForm initRegisterForm() {
+		return new UserRegisterForm();
+	}
+
+	@ModelAttribute("userLoginForm")
+	public UserLoginForm initLoginForm() {
+		return new UserLoginForm();
+	}
 }

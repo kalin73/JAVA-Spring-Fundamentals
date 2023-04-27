@@ -1,8 +1,16 @@
 package com.softuni.pathfinder.domain.dtos.binding;
 
+import com.softuni.pathfinder.validations.userExists.ValidateLoginUser;
+
+import jakarta.validation.constraints.NotNull;
+
+@ValidateLoginUser
 public class UserLoginForm {
-	
+
+	@NotNull
 	private String username;
+
+	@NotNull
 	private String password;
 
 	public UserLoginForm() {

@@ -1,4 +1,4 @@
-package com.softuni.pathfinder.web;
+package com.softuni.pathfinder.web.controllers;
 
 import java.util.Set;
 
